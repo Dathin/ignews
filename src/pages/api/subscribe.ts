@@ -51,30 +51,6 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
             customerId = stripeCustomer.id;
         }
-
-
-        // const user = await fauna.query<User>(
-        //     q.Get(
-        //         q.Match(
-        //             q.Index('user_by_email'),
-        //             q.Casefold(session.user.email)
-        //         )
-        //     )
-        // );
-
-        // console.log(user);
-        // console.log(user.ref.id);
-    
-        // await fauna.query(
-        //     q.Update(
-        //         q.Ref(q.Collections('users'), user.ref.id),
-        //         {
-        //             data: {
-        //                 stripe_customer_id: stripeCustomer.id
-        //             }
-        //         }
-        //     )
-        // )
          
         const stripeCheckoutSession = await stripe.checkout.sessions.create({
             customer: customerId,
