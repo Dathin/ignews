@@ -8,7 +8,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   
   return (
     <NextAuthProvider session={pageProps.session}>
-      <Header />,
+      <Header />
       <Component {...pageProps} />
     </NextAuthProvider>
 
