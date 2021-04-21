@@ -21,7 +21,10 @@ export const config = {
 };
 
 const relevantEvents = new Set([
-    'checkout.session.completed'
+    'checkout.session.completed',
+    'customer.subscriptions.created',
+    'customer.subscriptions.updated',
+    'customer.subscriptions.deleted',
 ])
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
@@ -44,7 +47,13 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         switch(type){
           case 'checkout.session.completed':
             const checkouSession = event.data.object as Stripe.Checkout.Session;
-            await saveSubscription(checkouSession.subscription.toString(), checkouSession.customer.toString());
+            await saveSubscription(checkouSession.subscription.toString(), checkouSession.customer.toString(), true);
+            break;
+          case 'customer.subscription.updated':
+          case 'customer.subscription.deleted':
+            const subscription = event.data.object as Stripe.Subscription
+
+            await saveSubscription(subscription.id, subscription.customer.toString(), false);
             break;
           default: 
             throw new Error(`Unhandled error`);
