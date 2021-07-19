@@ -29,6 +29,8 @@ describe('SubscribeButton component', () => {
 
         fireEvent.click(subscribeButton);
 
+        screen.logTestingPlaygroundURL();
+
         expect(signin).toHaveBeenCalled();
     });
 
