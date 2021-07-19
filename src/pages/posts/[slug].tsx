@@ -32,7 +32,7 @@ export default function Post({post}: PostProps){
 }
 
 export const getServerSideProps = async ({req, params}) => {
-    const session = await getSession({ req });
+    const session = (await getSession({ req })) as any;
 
     console.log(session)
 
